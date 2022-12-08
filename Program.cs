@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using MathNet.Symbolics;
-using Expr = MathNet.Symbolics.SymbolicExpression;
 using System.Text;
 
 namespace linear_equations
@@ -30,11 +29,11 @@ namespace linear_equations
                 leftSideString = splitEquation[0];
                 rightSideString = splitEquation[1];
 
-                leftSide = Expr.Parse(leftSideString); //simplify both sides
-                rightSide = Expr.Parse(rightSideString);
+                leftSide = SymbolicExpression.Parse(leftSideString); //simplify both sides
+                rightSide = SymbolicExpression.Parse(rightSideString);
 
-                string formattedText = FormatExp("Simplify: " + leftSide.ToString() + " = " + rightSide.ToString());
-                Console.WriteLine(formattedText);
+                string formattedText = FormatExp(leftSide.ToString() + " = " + rightSide.ToString());
+                Console.WriteLine("Simplify: " + formattedText); 
 
                 leftSideString = "";
                 rightSideString = "";
@@ -45,7 +44,7 @@ namespace linear_equations
                         string num1 = "+" + num;
                     }
 
-                    if (num.Contains("x"))
+                    if(num.Contains("x"))
                     {
                         leftSideString += " +" + num;
                     }
@@ -77,25 +76,25 @@ namespace linear_equations
             }
             else
             {
-                leftSide = Expr.Parse(input);
+                leftSide = SymbolicExpression.Parse(input);
             }
         }
 
-        static string FormatExp(SymbolicExpression exp) //make the expression in the format ax^2 + bx + c = 0
+        static string FormatExp(string exp) //make the expression in the format ax^2 + bx + c = 0
         {
-            return (string.Join(" ", exp.ToString().Split(' ').Reverse()));
+            return (string.Join(" ", exp.Split(' ').Reverse()));
         }
 
         public static string HandlePlusesAndMinuses(string input)//search for pluses and minuses and remove the spaces after them so they have a sign such as +2, -2 instead of + 2
         {
-            for (int i = input.IndexOf('+'); i > -1; i = input.IndexOf('+', i + 1))
+            for (int i = input.IndexOf('+'); i > -1; i = input.IndexOf('+', i + 1)) 
             {
                 if (input[i + 1] == ' ')
                 {
                     input = input.Remove(i + 1, 1);
                 }
             }
-            for (int i = input.IndexOf('-'); i > -1; i = input.IndexOf('-', i + 1))
+            for (int i = input.IndexOf('-'); i > -1; i = input.IndexOf('-', i + 1)) 
             {
                 if (input[i + 1] == ' ')
                 {
