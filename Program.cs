@@ -32,46 +32,78 @@ namespace linear_equations
                 leftSide = SymbolicExpression.Parse(leftSideString); //simplify both sides
                 rightSide = SymbolicExpression.Parse(rightSideString);
 
-                string formattedText = FormatExp(leftSide.ToString() + " = " + rightSide.ToString());
+                string formattedText = FormatExp(leftSide) + " = " + FormatExp(rightSide);
                 Console.WriteLine("Simplify: " + formattedText); 
 
                 leftSideString = "";
                 rightSideString = "";
                 foreach (string num in HandlePlusesAndMinuses(leftSide.ToString()).Split(' ')) //transfer the variables to the left and the numbers to the right
                 {
-                    if (num[0] != '+' || num[0] != '-') //add a sign to the beginning
+                    string num1 = num;
+                    if (num[0] != '+' && num[0] != '-') //add a sign to the beginning
                     {
-                        string num1 = "+" + num;
+                        num1 = "+" + num;
                     }
 
                     if(num.Contains("x"))
                     {
-                        leftSideString += " +" + num;
+                        leftSideString += " " + num1;
                     }
                     else
                     {
-                        //if(u)
+                        if (num1[0] == '+') //change sign
+                        {
+                            num1 = '-' + num1.Remove(0,1);
+                        }
+
+                        else
+                        {
+                            num1 = '+' + num1.Remove(0,1);
+                        }
+
+                        rightSideString += " " + num1; //add the the right side
                     }
                 }
 
                 foreach (string num in HandlePlusesAndMinuses(rightSide.ToString()).Split(' '))
                 {
+                    string num1 = num;
                     if (num[0] != '+' || num[0] != '-')
                     {
-                        leftSideString = "+" + num;
+                        num1 = "+" + num;
                     }
                     if (num.Contains("x"))
                     {
-                        leftSideString += " -" + num;
+                        if (num1[0] == '+') //change sign
+                        {
+                            num1 = '-' + num1.Remove(0, 1);
+                        }
+
+                        else
+                        {
+                            num1 = '+' + num1.Remove(0, 1);
+                        }
+                        leftSideString += " " + num1;
                     }
                     else
                     {
-                        rightSideString += " +" + num;
+                        rightSideString += " " + num1;
                     }
                 }
 
                 leftSideString = leftSideString.Remove(0, 1);
                 rightSideString = rightSideString.Remove(0, 1);
+                if (leftSideString[0] == '+')
+                {
+                    leftSideString = leftSideString.Remove(0, 1);
+                }
+
+                if (rightSideString[0] == '+')
+                {
+                   rightSideString.Remove(0, 1);
+                }
+
+                Console.WriteLine("Simplify: {0} = {1}", leftSideString, rightSideString);
 
             }
             else
@@ -80,9 +112,9 @@ namespace linear_equations
             }
         }
 
-        static string FormatExp(string exp) //make the expression in the format ax^2 + bx + c = 0
+        static string FormatExp(SymbolicExpression exp) //make the expression in the format ax^2 + bx + c = 0
         {
-            return (string.Join(" ", exp.Split(' ').Reverse()));
+            return (string.Join(" ", exp.ToString().Split(' ').Reverse()));
         }
 
         public static string HandlePlusesAndMinuses(string input)//search for pluses and minuses and remove the spaces after them so they have a sign such as +2, -2 instead of + 2
