@@ -1,4 +1,3 @@
-using Fractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,114 +9,116 @@ namespace linear_equations
 {
     internal class Program
     {
+        public static string leftSideString = string.Empty;
+        public static string rightSideString = string.Empty;
         static void Main(string[] args)
         {
-            SymbolicExpression leftSide;  //SymbolicExpression var of left side
-            SymbolicExpression rightSide;
-
-            string leftSideString; //string var of left side
-            string rightSideString;
-
-            string input = "2*x + 5*x + 3 + 9 = 10 + 1";
-
-            Console.WriteLine(input);
-
-            if (input.Contains("=")) //check if the input is an equation(x+2=0) or a math problem(5+3*2)
+            string inputExpr = "10*x + 5 + 2*x = x - 4";
+            Console.WriteLine(inputExpr);
+            if (inputExpr.Contains('=')) //check if the input is an equation(x+2=0) or a math problem(5+3*2)
             {
-                var splitEquation = input.Split('='); //split left and right side of the equation
-
-                leftSideString = splitEquation[0];
-                rightSideString = splitEquation[1];
-
-                leftSide = SymbolicExpression.Parse(leftSideString); //simplify both sides
-                rightSide = SymbolicExpression.Parse(rightSideString);
-
-                string formattedText = FormatExp(leftSide) + " = " + FormatExp(rightSide);
-                Console.WriteLine("Simplify: " + formattedText); 
-
-                leftSideString = "";
-                rightSideString = "";
-                foreach (string num in HandlePlusesAndMinuses(leftSide.ToString()).Split(' ')) //transfer the variables to the left and the numbers to the right
-                {
-                    string num1 = num;
-                    if (num[0] != '+' && num[0] != '-') //add a sign to the beginning
-                    {
-                        num1 = "+" + num;
-                    }
-
-                    if(num.Contains("x"))
-                    {
-                        leftSideString += " " + num1;
-                    }
-                    else
-                    {
-                        if (num1[0] == '+') //change sign
-                        {
-                            num1 = '-' + num1.Remove(0,1);
-                        }
-
-                        else
-                        {
-                            num1 = '+' + num1.Remove(0,1);
-                        }
-
-                        rightSideString += " " + num1; //add the the right side
-                    }
-                }
-
-                foreach (string num in HandlePlusesAndMinuses(rightSide.ToString()).Split(' '))
-                {
-                    string num1 = num;
-                    if (num[0] != '+' || num[0] != '-')
-                    {
-                        num1 = "+" + num;
-                    }
-                    if (num.Contains("x"))
-                    {
-                        if (num1[0] == '+') //change sign
-                        {
-                            num1 = '-' + num1.Remove(0, 1);
-                        }
-
-                        else
-                        {
-                            num1 = '+' + num1.Remove(0, 1);
-                        }
-                        leftSideString += " " + num1;
-                    }
-                    else
-                    {
-                        rightSideString += " " + num1;
-                    }
-                }
-
-                leftSideString = leftSideString.Remove(0, 1);
-                rightSideString = rightSideString.Remove(0, 1);
-                if (leftSideString[0] == '+')
-                {
-                    leftSideString = leftSideString.Remove(0, 1);
-                }
-
-                if (rightSideString[0] == '+')
-                {
-                   rightSideString.Remove(0, 1);
-                }
-
-                Console.WriteLine("Simplify: {0} = {1}", leftSideString, rightSideString);
-
+                Console.WriteLine(SolveEquation(inputExpr));
             }
             else
             {
-                leftSide = SymbolicExpression.Parse(input);
+                Console.WriteLine(SolveProblem(inputExpr)); 
             }
         }
-
-        static string FormatExp(SymbolicExpression exp) //make the expression in the format ax^2 + bx + c = 0
+        private static string SolveEquation(string expression)
         {
-            return (string.Join(" ", exp.ToString().Split(' ').Reverse()));
+            SymbolicExpression leftSide;  //SymbolicExpression var of left side
+            SymbolicExpression rightSide; //SymbolicExpression var of right side
+
+            var splitEquation = expression.Split('='); //split left and right side of the equation
+
+            leftSideString = splitEquation[0].Trim();
+            rightSideString = splitEquation[1].Trim();
+
+            leftSide = SymbolicExpression.Parse(leftSideString); //simplify left side
+            rightSide = SymbolicExpression.Parse(rightSideString); //simplify right side
+
+            string formattedText = string.Join(" ", leftSide.ToString().Split(' ').Reverse()) + " = " + string.Join(" ", rightSide.ToString().Split(' ').Reverse());
+            Console.WriteLine("Simplify1: " + formattedText);
+
+            leftSideString = "";
+            rightSideString = "";
+
+            ArrangeEquation(leftSide, true);
+            ArrangeEquation(rightSide, false);
+
+            leftSideString = leftSideString.Remove(0, 1);
+            rightSideString = rightSideString.Remove(0, 1);
+            if (leftSideString[0] == '+')
+            {
+                leftSideString = leftSideString.Remove(0, 1);
+            }
+
+            if (rightSideString[0] == '+')
+            {
+                rightSideString.Remove(0, 1);
+            }
+            leftSide = SymbolicExpression.Parse(leftSideString); //simplify left side
+            rightSide = SymbolicExpression.Parse(rightSideString); //simplify right side
+
+            string formattedText2 = string.Join(" ", leftSide.ToString().Split(' ').Reverse()) + " = " + string.Join(" ", rightSide.ToString().Split(' ').Reverse());
+            Console.WriteLine("Simplify2: " + leftSideString + " = " + rightSideString);
+            return $"Simplify2: {formattedText2}";
         }
 
-        public static string HandlePlusesAndMinuses(string input)//search for pluses and minuses and remove the spaces after them so they have a sign such as +2, -2 instead of + 2
+        private static string SolveProblem(string expression)
+        {
+            string answer = SymbolicExpression.Parse(expression).ToString();
+            return answer;
+        }
+        private static void ArrangeEquation(SymbolicExpression side, bool isLeft)
+        {
+            foreach (string inputNum in HandlePlusesAndMinuses(side.ToString()).Split(' '))
+            {
+                string formattedNum = inputNum;
+                if (inputNum[0] != '+' && inputNum[0] != '-') //add a sign to the beginning
+                {
+                    formattedNum = "+" + inputNum;
+                }
+                switch (isLeft)
+                {
+                    case true:
+                        switch (inputNum.Contains('x'))
+                        {
+                            case true: leftSideString += " " + formattedNum; break;
+                            case false:
+                                if (formattedNum[0] == '+') //change sign
+                                {
+                                    formattedNum = '-' + formattedNum.Remove(0, 1);
+                                }
+                                else
+                                {
+                                    formattedNum = '+' + formattedNum.Remove(0, 1);
+                                }
+                                rightSideString += " " + formattedNum; //add the the right side
+                                break;
+                        }
+                        break;
+                    case false:
+                        switch (inputNum.Contains('x'))
+                        {
+                            case true:
+                                if (formattedNum[0] == '+') //change sign
+                                {
+                                    formattedNum = '-' + formattedNum.Remove(0, 1);
+                                }
+                                else
+                                {
+                                    formattedNum = '+' + formattedNum.Remove(0, 1);
+                                }
+                                leftSideString += " " + formattedNum; 
+                                break;
+                            case false: rightSideString += " " + formattedNum; break;
+                        }
+                        break;
+                }
+            }
+        }
+        private static string HandlePlusesAndMinuses(string input)//search for pluses and minuses and remove the spaces after them so they have a sign such as +2, -2 instead of + 2
         {
             for (int i = input.IndexOf('+'); i > -1; i = input.IndexOf('+', i + 1)) 
             {
@@ -137,5 +138,3 @@ namespace linear_equations
         }
     }
 }
-
-
