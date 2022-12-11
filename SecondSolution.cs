@@ -1,22 +1,29 @@
-﻿using MathNet.Symbolics;
+﻿using System;
+using MathNet.Symbolics;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace MySolution
 {
     public class SecondSolution
     {
-        public static void Main()
+        public static async Task Main()
         {
-        next:
-            Console.Write("Expression: ");
             string lettersFilter = "[a-z]";
-            string inputExpression = Console.ReadLine()!; //Input in format: a*x + b - c = d*x + e OR a*x + b - c
-            string formattedExpression = Regex.Replace(inputExpression, lettersFilter, "x");
-            Console.WriteLine($"Answer: " + SolveProblem(formattedExpression)); //Output the solution
-            Console.WriteLine("Type any key to continue");
-            Console.ReadKey();
-            Console.Clear();
-            goto next;
+            string[] inputExpressions = await File
+                .ReadAllLinesAsync("Your input path");
+            //Input in format: a*x + b - c = d*x + e OR a*x + b - c
+
+            for (int i = 0; i < inputExpressions.Length; i++)
+            {
+                string formattedExpression = Regex.Replace(inputExpressions[i], lettersFilter, "x");
+                Console.Write($"{inputExpressions[i]}: ");
+                string answer = $"Answer: " + SolveProblem(formattedExpression);
+                Console.WriteLine(answer); //Output the solution
+                await File.AppendAllTextAsync("Your input path", answer + "\n");
+            }
         }
         //Main method for solving problems
         private static string SolveProblem(string inputExpression) //Solve problem from input
@@ -35,7 +42,6 @@ namespace MySolution
                 string rightOutput = SymbolicExpression.Parse(inputExpression
                     .Split('=', StringSplitOptions.RemoveEmptyEntries)[1]
                     .Trim()).ToString();
-                Console.WriteLine($"Step 2: {string.Concat(leftOutput, " = ", rightOutput)}");
                 return string.Concat(leftOutput, " = ", rightOutput); //Concat both sides to form the final equation for the solution
             }
             else
@@ -126,7 +132,6 @@ namespace MySolution
             }
             leftSideNumbers = RemoveRemainingNumbersAndSigns(leftSideNumbers, leftSideNumbersToBeRemoved);
             rightSideNumbers = RemoveRemainingNumbersAndSigns(rightSideNumbers, rightSideNumbersToBeRemoved);
-            Console.WriteLine($"Step 1: {string.Concat(string.Join(" ", leftSideNumbers), " = ", string.Join(" ", rightSideNumbers))}");
             return string.Concat(string.Join(" ", leftSideNumbers), " = ", string.Join(" ", rightSideNumbers)); //Returning the final equation for the solution
         }
         //Method for removal of unnecessary numbers and signs (sort of garbage collection for both sides)
@@ -146,6 +151,10 @@ namespace MySolution
                 {
                     currentSideNumbers[0] = currentSideNumbers[0].Replace('+', ' ').Trim();
                 }
+            }
+            if (currentSideNumbers.Count == 0)
+            {
+                currentSideNumbers.Add("0");
             }
             return currentSideNumbers;
         }
