@@ -13,16 +13,17 @@ namespace MySolution
         public static async Task Main()
         {
             string lettersFilter = "[a-z]";
+
             //Input in format: a*x + b - c = d*x + e OR a*x + b - c
             string[] inputExpressions = await File
-                .ReadAllLinesAsync("Your input path");
+                .ReadAllLinesAsync("equations.txt");
             for (int i = 0; i < inputExpressions.Length; i++)
             {
                 string formattedExpression = Regex.Replace(inputExpressions[i], lettersFilter, "x");
                 Console.Write($"{inputExpressions[i]}: ");
                 string answer = $"Answer: " + SolveProblem(formattedExpression);
                 Console.WriteLine(answer); //Output the solution
-                await File.AppendAllTextAsync("Your input path", answer + "\n");
+                await File.AppendAllTextAsync("answers.txt", answer + "\n");
             }
         }
         //Main method for solving problems
@@ -30,20 +31,22 @@ namespace MySolution
         {
             if (inputExpression.Contains('=')) //Check if the problem is an equation or a simpler math problem
             {
-                string leftSide = inputExpression.Split('=', StringSplitOptions.RemoveEmptyEntries)[0]!.Trim();
-                string rightSide = inputExpression.Split('=', StringSplitOptions.RemoveEmptyEntries)[1]!.Trim();
+                string leftSide = inputExpression.Split('=', StringSplitOptions.TrimEntries)[0]!.Trim();
+                string rightSide = inputExpression.Split('=', StringSplitOptions.TrimEntries)[1]!.Trim();
+
                 //Check for parentheses: 9 - 2*(x - 5) = x + 10 --> 19 - 2*x = 10 + x
                 leftSide = CheckForParentheses(leftSide);
                 rightSide = CheckForParentheses(rightSide);
+
                 //Normalize the equation: a*x + b - c = d*x + e --> a*x - d*x = e - b + c (unknowns on the left, numbers on the right)
+                string[] outputExpression = NormalizeEquation(leftSide, rightSide);
+                leftSide = outputExpression[0];
+                rightSide = outputExpression[1];
+
                 string leftOutput = SymbolicExpression
-                    .Parse(NormalizeEquation(leftSide, rightSide) //Simplify left output as much as possible
-                    .Split('=', StringSplitOptions.RemoveEmptyEntries)[0]
-                    .Trim()).ToString();
+                    .Parse(leftSide).ToString(); //Simplify left output as much as possible
                 string rightOutput = SymbolicExpression
-                    .Parse(NormalizeEquation(leftSide, rightSide) //Simplify right output as much as possible
-                    .Split('=', StringSplitOptions.RemoveEmptyEntries)[1]
-                    .Trim()).ToString();
+                    .Parse(rightSide).ToString(); //Simplify right output as much as possible
                 return string.Concat(leftOutput, " = ", rightOutput); //Concat both sides to form the final equation for the solution
             }
             else
@@ -63,7 +66,7 @@ namespace MySolution
             return side;
         }
         //Method for normalizing equations if need be
-        private static string NormalizeEquation(string leftSide, string rightSide)
+        private static string[] NormalizeEquation(string leftSide, string rightSide)
         {
             leftSide = AddSignInBeginning(leftSide);
             rightSide = AddSignInBeginning(rightSide);
@@ -145,7 +148,9 @@ namespace MySolution
             }
             leftSideNumbers = RemoveRemainingNumbersAndSigns(leftSideNumbers, leftSideNumbersToBeRemoved);
             rightSideNumbers = RemoveRemainingNumbersAndSigns(rightSideNumbers, rightSideNumbersToBeRemoved);
-            return string.Concat(string.Join(" ", leftSideNumbers, " = ", string.Join(" ", rightSideNumbers))); //Returning the final equation for the solution
+
+            //Returning the final equation for the solution
+            return new string[] { string.Join(" ", leftSideNumbers), string.Join(" ", rightSideNumbers) };
         }
         //Method for removal of unnecessary numbers and signs (sort of garbage collection for both sides)
         private static List<string> RemoveRemainingNumbersAndSigns(List<string> currentSideNumbers, List<string> currentSideNumbersToBeRemoved)
