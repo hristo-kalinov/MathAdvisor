@@ -23,7 +23,7 @@ namespace MySolution
                 Console.Write($"{inputExpressions[i]}: ");
                 string answer = $"Answer: " + SolveProblem(formattedExpression);
                 Console.WriteLine(answer); //Output the solution
-                await File.AppendAllTextAsync("answers.txt", answer + "\n");
+                await File.AppendAllTextAsync("../../../answers.txt", answer + Environment.NewLine);
             }
         }
         //Main method for solving problems
@@ -47,12 +47,40 @@ namespace MySolution
                     .Parse(leftSide).ToString(); //Simplify left output as much as possible
                 string rightOutput = SymbolicExpression
                     .Parse(rightSide).ToString(); //Simplify right output as much as possible
-                return string.Concat(leftOutput, " = ", rightOutput); //Concat both sides to form the final equation for the solution
+                string simplified = string.Concat(leftOutput, " = ", rightOutput);
+                if (!leftOutput.Contains('^'))
+                {
+                    decimal leftCoefficient = CalculateCoefficient(leftOutput);
+                    decimal rightCoefficient = CalculateCoefficient(rightOutput);
+                    decimal result = rightCoefficient / leftCoefficient;
+                    return $"{simplified} => x = {result:F2}"; //Final result
+                }
+                else
+                {
+                    return simplified; //These are quadratic equations so no implementation for now
+                }
             }
             else
             {
                 return SymbolicExpression.Parse(CheckForParentheses(inputExpression)).ToString(); //Solve the output as much as possible
             }
+        }
+        //Calculate coefficient of x and the right side to find the true value of x
+        private static decimal CalculateCoefficient(string side)
+        {
+            bool coefficientHandled = false;
+            decimal coefficient = 0m;
+            if (side.Contains('/'))
+            {
+                decimal[] fraction = side.Split('/').Select(decimal.Parse).ToArray();
+                coefficient = fraction[0] / fraction[1];
+                coefficientHandled = true;
+            }
+            if (!coefficientHandled)
+            {
+                coefficient = decimal.Parse(side.Substring(0, side.Length - 2));
+            }
+            return coefficient;
         }
         //Method to check if either side of the equation has any parentheses to be expaned before solving
         private static string CheckForParentheses(string side)
