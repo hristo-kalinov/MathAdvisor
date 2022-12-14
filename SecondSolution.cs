@@ -45,9 +45,19 @@ namespace MySolution
                 string simplified = string.Concat(leftOutput, " = ", rightOutput);
                 if (!leftOutput.Contains('^'))
                 {
-                    decimal leftCoefficient = CalculateCoefficient(leftOutput);
-                    decimal rightCoefficient = CalculateCoefficient(rightOutput);
-                    decimal result = rightCoefficient / leftCoefficient;
+                    decimal result;
+                    object[] leftCoefficientOperation = CalculateCoefficient(leftOutput);
+                    decimal leftCoefficient = (decimal)leftCoefficientOperation[0];
+                    bool divisionNeeded = (bool)leftCoefficientOperation[1];
+                    decimal rightCoefficient = (decimal)CalculateCoefficient(rightOutput)[0];
+                    if (divisionNeeded)
+                    {
+                        result = leftCoefficient / rightCoefficient;
+                    }
+                    else
+                    {
+                        result = rightCoefficient / leftCoefficient;
+                    }
                     return $"{simplified} => x = {result:F2}"; //Final result
                 }
                 else
@@ -61,8 +71,9 @@ namespace MySolution
             }
         }
         //Calculate coefficient of x and the right side to find the true value of x
-        private static decimal CalculateCoefficient(string side)
+        private static object[] CalculateCoefficient(string side)
         {
+            bool divisionNeeded = false;
             decimal coefficient = 0m;
             if (side.Length == 1 && side.StartsWith('x'))
             {
@@ -73,26 +84,39 @@ namespace MySolution
                 decimal[] fraction;
                 if (side.Contains('x'))
                 {
-                    fraction = side.Substring(0, side.Length - 2)
+                    if (side.Contains('/') && side.Contains('*'))
+                    {
+                        fraction = side.Substring(0, side.Length - 2)
                         .Split('/', StringSplitOptions.TrimEntries)
                         .Select(decimal.Parse).ToArray();
+                        coefficient = fraction[0] / fraction[1];
+                    }
+                    else if (side.Contains('/') && !side.Contains('*'))
+                    {
+                        coefficient = decimal.Parse(side.Substring(0, side.Length - 2));
+                        divisionNeeded = true;
+                    }
+                    else if (!side.Contains('/') && side.Contains('*'))
+                    {
+                        coefficient = decimal.Parse(side.Substring(0, side.Length - 2));
+                    }
                 }
                 else
                 {
                     fraction = side
                         .Split('/', StringSplitOptions.TrimEntries)
                         .Select(decimal.Parse).ToArray();
-                }
-                if (side.Contains('/'))
-                {
-                    coefficient = fraction[0] / fraction[1];
-                }
-                else
-                {
-                    coefficient = fraction[0];
+                    if (side.Contains('/'))
+                    {
+                        coefficient = fraction[0] / fraction[1];
+                    }
+                    else
+                    {
+                        coefficient = fraction[0];
+                    }
                 }
             }
-            return coefficient;
+            return new object[] { coefficient, divisionNeeded };
         }
         //Method to check if either side of the equation has any parentheses to be expaned before solving
         private static string CheckForParentheses(string side)
