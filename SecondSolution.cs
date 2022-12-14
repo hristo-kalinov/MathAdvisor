@@ -1,10 +1,5 @@
-﻿using System;
-using MathNet.Symbolics;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MathNet.Symbolics;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Linq.Expressions;
 
 namespace MySolution
 {
@@ -68,17 +63,34 @@ namespace MySolution
         //Calculate coefficient of x and the right side to find the true value of x
         private static decimal CalculateCoefficient(string side)
         {
-            bool coefficientHandled = false;
             decimal coefficient = 0m;
-            if (side.Contains('/'))
+            if (side.Length == 1 && side.StartsWith('x'))
             {
-                decimal[] fraction = side.Split('/').Select(decimal.Parse).ToArray();
-                coefficient = fraction[0] / fraction[1];
-                coefficientHandled = true;
+                coefficient = 1m;
             }
-            if (!coefficientHandled)
+            else
             {
-                coefficient = decimal.Parse(side.Substring(0, side.Length - 2));
+                decimal[] fraction;
+                if (side.Contains('x'))
+                {
+                    fraction = side.Substring(0, side.Length - 2)
+                        .Split('/', StringSplitOptions.TrimEntries)
+                        .Select(decimal.Parse).ToArray();
+                }
+                else
+                {
+                    fraction = side
+                        .Split('/', StringSplitOptions.TrimEntries)
+                        .Select(decimal.Parse).ToArray();
+                }
+                if (side.Contains('/'))
+                {
+                    coefficient = fraction[0] / fraction[1];
+                }
+                else
+                {
+                    coefficient = fraction[0];
+                }
             }
             return coefficient;
         }
