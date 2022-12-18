@@ -1,1 +1,1 @@
-# MathSolver
+# MathAdvisor
