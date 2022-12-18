@@ -1,4 +1,5 @@
 ﻿using MathNet.Symbolics;
+using System.Text.RegularExpressions;
 
 namespace MathAdvisor.Algebra
 {
@@ -12,10 +13,12 @@ namespace MathAdvisor.Algebra
         /// </summary>
         /// <param name="inputExpression">Initial input expression</param>
         /// <returns>Solved equation for x</returns>
-        public static string SolveEquation(string inputExpression) //Solve problem from input
+        public static string Solve(string inputExpression) //Solve problem from input
         {
-            string leftSide = inputExpression.Split('=', StringSplitOptions.TrimEntries)[0]!.Trim();
-            string rightSide = inputExpression.Split('=', StringSplitOptions.TrimEntries)[1]!.Trim();
+            string lettersFilter = "[a-z]";
+            string formattedExpression = Regex.Replace(inputExpression, lettersFilter, "x");
+            string leftSide = formattedExpression.Split('=', StringSplitOptions.TrimEntries)[0]!.Trim();
+            string rightSide = formattedExpression.Split('=', StringSplitOptions.TrimEntries)[1]!.Trim();
 
             leftSide = CheckForParentheses(leftSide);
             rightSide = CheckForParentheses(rightSide);

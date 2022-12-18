@@ -1,4 +1,7 @@
-﻿using MathAdvisor.PreAlgebra;
+﻿using Fractions;
+using MathAdvisor.PreAlgebra;
+using MathAdvisor.Algebra;
+using MathNet.Symbolics;
 
 namespace MathAdvisor
 {

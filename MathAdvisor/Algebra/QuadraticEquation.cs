@@ -11,7 +11,7 @@
         /// <param name="inputEquation">Initial input equation</param>
         /// <returns>Solved equation for x</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static string SolveEquation(string inputEquation)
+        public static string Solve(string inputEquation)
         {
             throw new NotImplementedException();
         }
