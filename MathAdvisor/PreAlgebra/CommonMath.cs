@@ -1,32 +1,33 @@
 ﻿using Fractions;
 namespace MathAdvisor.PreAlgebra
 {
+    /// <summary>
+    /// Class for implementing common math tasks
+    /// </summary>
     public static class CommonMath
     {
         /// <summary>
-        /// Returns the Mean of any number of Fractions
-        /// Example usage:
-        /// Fraction num1 = new Fraction(5, 1); //5
-        /// Fraction num1 = new Fraction(2, 3); //2/3
-        /// Console.WriteLine(PreAlgebra.Mean(new Fraction[2] {num1, num2}));
+        /// Calculate Mean of any numbers
         /// </summary>
-        public static Fraction CalculateMean(Fraction[] numbers)
+        /// <param name="numbers"></param>
+        /// <returns>Average value of input numbers</returns>
+        public static Fraction CalculateMean(params Fraction[] numbers)
         {
             int sum = 0;
             foreach (int x in numbers)
             {
                 sum += x;
             }
-            Fraction aver = new Fraction(sum, numbers.Length);
-            return aver;
+            Fraction avg = new Fraction(sum, numbers.Length);
+            return avg;
         }
 
         /// <summary>
-        /// Returns the Greate Common Divisor of any number of integers
-        /// Examample usage:
-        /// Console.WriteLine(PreAlgebra.GreatestCommonDivisor(new int[4] {8, 16, 32, 64}));
+        /// Calculate greatest common divisor for any numbers
         /// </summary>
-        public static int GreatestCommonDivisor(int[] numbers)
+        /// <param name="numbers"></param>
+        /// <returns>Greatest common divisor</returns>
+        public static int CalculateGreatestCommonDivisor(int[] numbers)
         {
             int result = numbers[0];
             for (int i = 1; i < numbers.Length; i++)
@@ -40,6 +41,28 @@ namespace MathAdvisor.PreAlgebra
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Calculate least common multiple for any numbers
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <returns>Least common multiple</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static int CalculateLeastCommonMultiple(int[] numbers)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Calculate prime factors for any number
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns>Prime factors</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static int[] CalculatePrimeFactors(int number)
+        {
+            throw new NotImplementedException();
         }
 
         private static int gcd(int a, int b)

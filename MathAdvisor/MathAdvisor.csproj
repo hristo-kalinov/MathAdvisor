@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Algebra\" />
+    <PackageReference Include="Fractions" Version="7.2.1" />
+    <PackageReference Include="MathNet.Symbolics" Version="0.24.0" />
   </ItemGroup>
 
 </Project>
