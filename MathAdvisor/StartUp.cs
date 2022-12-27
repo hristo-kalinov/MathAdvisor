@@ -14,8 +14,7 @@ namespace MathAdvisor
     {
         static void Main(string[] args)
         {
-            string solution = Solver.Solve("(x-1/2)*(x+1/2)=0");
-            Console.WriteLine(solution);
+            Console.WriteLine(Solver.Solve(""));
         }
     }
 

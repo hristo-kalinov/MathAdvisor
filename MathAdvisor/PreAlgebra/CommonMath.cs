@@ -93,6 +93,23 @@ namespace MathAdvisor.PreAlgebra
             return side;
         }
 
+        public static List<int> Factorize(int n)
+        {
+            var factors = new List<int>();
+            while (n > 1)
+            {
+                for (int i = 2; 2 <= i && i <= n + 1; i++)
+                {
+                    if (n % i == 0)
+                    {
+                        n = int.Parse((n / i).ToString());
+                        factors.Add(i);
+                        break;
+                    }
+                }
+            }
+            return factors;
+        }
         /// <summary>
         /// Method for normalizing equations if need be
         /// </summary>
@@ -230,5 +247,6 @@ namespace MathAdvisor.PreAlgebra
             return new string[] { string.Join(" ", leftSideNumbers), string.Join(" ", rightSideNumbers) };
         }
 
+        
     }
 }

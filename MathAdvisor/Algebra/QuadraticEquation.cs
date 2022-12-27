@@ -19,7 +19,6 @@ namespace MathAdvisor.Algebra
             string[] equationArray = CommonMath.NormalizeEquation(leftSide, rightSide, true);
             string rawExpression = string.Concat(equationArray[0], " = ", equationArray[1]);
             leftSide = StringHandling.ReverseEquation(SymbolicExpression.Parse(equationArray[0]).ToString()); //Parse left side; no need for right side implementation since it's always 0
-            Solver.solution += $"Identify as quadratic equation: {leftSide} = 0\n";
             leftSide = StringHandling.HandlePlusesAndMinuses(leftSide);
             DiscriminantFormula(leftSide);
         }
@@ -50,6 +49,7 @@ namespace MathAdvisor.Algebra
                     b = "1";
                 }
                 c = parameters[2];
+                QuadraticFormula(a, b, c);
             }
             else if(parameters.Length == 2)
             {
@@ -68,7 +68,18 @@ namespace MathAdvisor.Algebra
                 {
                     c = parameters[1];
                 }
+                QuadraticFormula(a, b, c);
             }
+
+            else
+            {
+                Solver.solution += "x = 0";
+            }
+
+        }
+
+        private static void QuadraticFormula(string a, string b, string c)
+        {
             a = AddParenthesesOnNegatives(a);
             b = AddParenthesesOnNegatives(b);
             c = AddParenthesesOnNegatives(c);
@@ -77,6 +88,7 @@ namespace MathAdvisor.Algebra
             if (int.Parse(discriminant) < 0)
             {
                 Solver.solution += $"{discriminant} is smaller than 0 therefore the equation doesn't have an answer";
+                return;
             }
             var dInfix = Infix.ParseOrThrow($"sqrt({discriminant})");
             string realValue = Evaluate.Evaluate(null, dInfix).RealValue.ToString();
@@ -93,7 +105,6 @@ namespace MathAdvisor.Algebra
             Solver.solution += $"Solve for x1 by using the formula (-b + sqrt(D))/(2*a) = ({SymbolicExpression.Parse($"-{b}")} + {discriminant})/(2*{a}) = {firstAnswer}\n";
             Solver.solution += $"Solve for x2 by using the formula (-b - sqrt(D))/(2*a) = ({SymbolicExpression.Parse($"-{b}")} - {discriminant})/(2*{a}) = {secondAnswer}\n";
         }
-
         private static string AddParenthesesOnNegatives(string number)
         {
             if (number[0] == '-')
