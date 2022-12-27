@@ -18,9 +18,9 @@ namespace MathAdvisor.Algebra
         {
             string[] equationArray = CommonMath.NormalizeEquation(leftSide, rightSide, true);
             string rawExpression = string.Concat(equationArray[0], " = ", equationArray[1]);
-            leftSide = CommonMath.ReverseEquation(SymbolicExpression.Parse(equationArray[0]).ToString()); //Parse left side; no need for right side implementation since it's always 0
-            StartUp.solution += $"Identify as quadratic equation: {leftSide} = 0\n";
-            leftSide = CommonMath.HandlePlusesAndMinuses(leftSide);
+            leftSide = StringHandling.ReverseEquation(SymbolicExpression.Parse(equationArray[0]).ToString()); //Parse left side; no need for right side implementation since it's always 0
+            Solver.solution += $"Identify as quadratic equation: {leftSide} = 0\n";
+            leftSide = StringHandling.HandlePlusesAndMinuses(leftSide);
             DiscriminantFormula(leftSide);
         }
 
@@ -51,7 +51,7 @@ namespace MathAdvisor.Algebra
                 }
                 c = parameters[2];
             }
-            else
+            else if(parameters.Length == 2)
             {
                 if (parameters[1].Contains('x'))
                 {
@@ -73,10 +73,10 @@ namespace MathAdvisor.Algebra
             b = AddParenthesesOnNegatives(b);
             c = AddParenthesesOnNegatives(c);
             string discriminant = SymbolicExpression.Parse($"{b}^2 - 4*{a}*{c}").ToString();
-            StartUp.solution += $"Solve the Discriminant using the formula b^2 - 4ac: {b}^2 - 4*{a}*{c} = {discriminant}\n";
+            Solver.solution += $"Solve the Discriminant using the formula b^2 - 4ac: {b}^2 - 4*{a}*{c} = {discriminant}\n";
             if (int.Parse(discriminant) < 0)
             {
-                StartUp.solution += $"{discriminant} is smaller than 0 therefore the equation doesn't have an answer";
+                Solver.solution += $"{discriminant} is smaller than 0 therefore the equation doesn't have an answer";
             }
             var dInfix = Infix.ParseOrThrow($"sqrt({discriminant})");
             string realValue = Evaluate.Evaluate(null, dInfix).RealValue.ToString();
@@ -90,8 +90,8 @@ namespace MathAdvisor.Algebra
             }
             string firstAnswer = SymbolicExpression.Parse($"(-{b} + {discriminant})/(2*{a})\n").ToString();
             string secondAnswer = SymbolicExpression.Parse($"(-{b} - {discriminant})/(2*{a})\n").ToString();
-            StartUp.solution += $"Solve for x1 by using the formula (-b + sqrt(D))/(2*a) = ({SymbolicExpression.Parse($"-{b}")} + {discriminant})/(2*{a}) = {firstAnswer}\n";
-            StartUp.solution += $"Solve for x2 by using the formula (-b - sqrt(D))/(2*a) = ({SymbolicExpression.Parse($"-{b}")} - {discriminant})/(2*{a}) = {secondAnswer}\n";
+            Solver.solution += $"Solve for x1 by using the formula (-b + sqrt(D))/(2*a) = ({SymbolicExpression.Parse($"-{b}")} + {discriminant})/(2*{a}) = {firstAnswer}\n";
+            Solver.solution += $"Solve for x2 by using the formula (-b - sqrt(D))/(2*a) = ({SymbolicExpression.Parse($"-{b}")} - {discriminant})/(2*{a}) = {secondAnswer}\n";
         }
 
         private static string AddParenthesesOnNegatives(string number)

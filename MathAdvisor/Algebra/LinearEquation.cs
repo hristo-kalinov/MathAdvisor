@@ -28,7 +28,7 @@ namespace MathAdvisor.Algebra
             {
                 result = rightCoefficient / leftCoefficient;
             }
-            StartUp.solution += $"x = {result}";
+            Solver.solution += $"x = {result}";
         }
 
         /// <summary>
