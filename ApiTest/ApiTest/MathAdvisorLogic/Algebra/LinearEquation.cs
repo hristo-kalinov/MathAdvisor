@@ -1,4 +1,5 @@
-﻿using MathNet.Symbolics;
+﻿using ApiTest.MathAdvisorLogic;
+using MathNet.Symbolics;
 using System.Text.RegularExpressions;
 
 namespace MathAdvisor.Algebra

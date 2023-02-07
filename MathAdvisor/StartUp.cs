@@ -14,7 +14,8 @@ namespace MathAdvisor
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Solver.Solve(""));
+            string leftSide = "(5)/(3)x+4=5-6";
+            Console.WriteLine(SymbolicExpression.Parse("2^5"));
         }
     }
 

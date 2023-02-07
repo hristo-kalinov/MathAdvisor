@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathAdvisor
+namespace ApiTest.MathAdvisorLogic
 {
     public class Solver
     {

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Math Problem Solver</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" href="mathquill.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="js/latex-to-js.js"></script>  
+  <script src="js/mathquill.js"></script>
+</head>
+<body>
+  <div id="container">
+    <h1>Math Problem Solver</h1>
+    <label for="problem">Enter your math problem:</label><br>
+    <div id="math-container">
+      <span id="math-field"></span>
+      <button id="send-button">
+        <div class="icon">
+          <div class="plane"></div>
+        </div>
+      </button><br>
+    </div>
+  <div id="button-container">
+    <button id="plus-button" class="btn">+</button>
+    <button id="minus-button" class="btn">-</button>
+    <button id="mult-button" class="btn">*</button>
+    <button id="div-button" class="btn">/</button>
+    <button id="pow-button" class="btn">^</button>
+    <button id="sqrt-button" class="btn">√</button>
+    <button id="pi-button" class="btn">π</button>
+  </div>
+    <p>LaTeX of what you typed: <span id="latex"></span></p>
+    <p>String of what you typed: <span id="string"></span></p>
+    <div id="explanation"></div>
+  </div>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById("math-field").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      sendData();
+    }
+  });
+  
+  document.getElementById("send-button").addEventListener("click", sendData);
+  
+    function sendData() {
+        console.log(publicMathString)
+        fetch('https://localhost:7251/GetSolution', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+                body: JSON.stringify(publicMathString)
+    })
+    
+    .then(response => response.text())
+    .then(responseText => {
+      console.log(responseText)
+      /*const steps = responseText.split('\n');
+      const explanationDiv = document.getElementById("explanation");
+      explanationDiv.innerHTML = "";
+  
+      for (let i = 0; i < steps.length; i++) {
+        const stepDiv = document.createElement("div");
+        stepDiv.classList.add("step");
+        stepDiv.innerHTML = steps[i];
+        explanationDiv.appendChild(stepDiv);
+      }*/
+    });
+  }
+  </script>
+</body>
+</html>
