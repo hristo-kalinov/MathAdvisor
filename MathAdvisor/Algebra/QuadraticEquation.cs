@@ -18,8 +18,8 @@ namespace MathAdvisor.Algebra
         {
             string[] equationArray = CommonMath.NormalizeEquation(leftSide, rightSide, true);
             string rawExpression = string.Concat(equationArray[0], " = ", equationArray[1]);
-            leftSide = StringHandling.ReverseEquation(SymbolicExpression.Parse(equationArray[0]).ToString()); //Parse left side; no need for right side implementation since it's always 0
-            leftSide = StringHandling.HandlePlusesAndMinuses(leftSide);
+            leftSide = StringHandler.ReverseEquation(SymbolicExpression.Parse(equationArray[0]).ToString()); //Parse left side; no need for right side implementation since it's always 0
+            leftSide = StringHandler.HandlePlusesAndMinuses(leftSide);
             DiscriminantFormula(leftSide);
         }
 

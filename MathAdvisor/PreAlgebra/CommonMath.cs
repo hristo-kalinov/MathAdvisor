@@ -118,10 +118,10 @@ namespace MathAdvisor.PreAlgebra
         /// <returns>Normalized equation</returns>
         public static string[] NormalizeEquation(string leftSide, string rightSide, bool isQuadratic)
         {
-            leftSide = StringHandling.AddSignInBeginning(leftSide);
-            rightSide = StringHandling.AddSignInBeginning(rightSide);
-            List<char> leftSideSigns = StringHandling.AddSignsInArray(leftSide);
-            List<char> rightSideSigns = StringHandling.AddSignsInArray(rightSide);
+            leftSide = StringHandler.AddSignInBeginning(leftSide);
+            rightSide = StringHandler.AddSignInBeginning(rightSide);
+            List<char> leftSideSigns = StringHandler.AddSignsInArray(leftSide);
+            List<char> rightSideSigns = StringHandler.AddSignsInArray(rightSide);
             List<string> leftSideNumbers = leftSide.Split(new string[] { "+", "-", " + ", " - " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             List<string> rightSideNumbers = rightSide.Split(new string[] { "+", "-", " + ", " - " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             List<string> leftSideNumbersToBeRemoved = new();
@@ -165,8 +165,8 @@ namespace MathAdvisor.PreAlgebra
                         rightSideNumbersToBeRemoved.Add(rightSideNumbers[num]);
                     }
                 }
-                leftSideNumbers = StringHandling.RemoveRemainingNumbersAndSigns(leftSideNumbers, leftSideNumbersToBeRemoved);
-                rightSideNumbers = StringHandling.RemoveRemainingNumbersAndSigns(rightSideNumbers, rightSideNumbersToBeRemoved);
+                leftSideNumbers = StringHandler.RemoveRemainingNumbersAndSigns(leftSideNumbers, leftSideNumbersToBeRemoved);
+                rightSideNumbers = StringHandler.RemoveRemainingNumbersAndSigns(rightSideNumbers, rightSideNumbersToBeRemoved);
 
                 //Returning the final equation for the solution
                 return new string[] { string.Join(" ", leftSideNumbers), string.Join(" ", rightSideNumbers) };
@@ -240,13 +240,11 @@ namespace MathAdvisor.PreAlgebra
                     }
                 }
             }
-            leftSideNumbers = StringHandling.RemoveRemainingNumbersAndSigns(leftSideNumbers, leftSideNumbersToBeRemoved);
-            rightSideNumbers = StringHandling.RemoveRemainingNumbersAndSigns(rightSideNumbers, rightSideNumbersToBeRemoved);
+            leftSideNumbers = StringHandler.RemoveRemainingNumbersAndSigns(leftSideNumbers, leftSideNumbersToBeRemoved);
+            rightSideNumbers = StringHandler.RemoveRemainingNumbersAndSigns(rightSideNumbers, rightSideNumbersToBeRemoved);
 
             //Returning the final equation for the solution
             return new string[] { string.Join(" ", leftSideNumbers), string.Join(" ", rightSideNumbers) };
         }
-
-        
     }
 }

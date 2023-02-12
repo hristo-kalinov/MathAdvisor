@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MathAdvisor.PreAlgebra
 {
-    public static class StringHandling
+    public static class StringHandler
     {
         /// <summary>
         /// Add plus or minus in front of the first number so the sign becomes known for the <currentSideSigns> array
@@ -74,7 +74,7 @@ namespace MathAdvisor.PreAlgebra
             return currentSideNumbers;
         }
 
-        public static string SymbolHandling(string input)
+        public static string HandleSymbol(string input)
         {
             string lettersFilter = "[a-z]";
             string formattedExpression = Regex.Replace(input, lettersFilter, "x");
