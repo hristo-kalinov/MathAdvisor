@@ -15,12 +15,12 @@ namespace MathAdvisor
     {
         static void Main(string[] args)
         {
-<<<<<<< Updated upstream
+
             var equation = SymbolicExpression.Parse("x+3+4");
             Console.WriteLine(equation.ToString()); 
-=======
+
             Console.WriteLine(Solver.Solve("-x = 3 + 5"));
->>>>>>> Stashed changes
+
         }
     }
 }
