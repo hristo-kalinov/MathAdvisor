@@ -29,7 +29,7 @@ namespace MathAdvisor.Algebra
             {
                 result = rightCoefficient / leftCoefficient;
             }
-            Solver.solution += $"x = {result}\n";
+            Solver.answers.Add(result.ToString());
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace MathAdvisor.Algebra
                     }
                     else if (side.Contains('/') && !side.Contains('*'))
                     {
-                        var text = side.Substring(2, side.Length-1);
-                        coefficient = decimal.Parse(side.Substring(2, side.Length-1));
+                        var text = side.Substring(2, side.Length-2);
+                        coefficient = decimal.Parse(side.Substring(2, side.Length-2));
                         divisionNeeded = true;
                     }
                     else if (!side.Contains('/') && side.Contains('*'))

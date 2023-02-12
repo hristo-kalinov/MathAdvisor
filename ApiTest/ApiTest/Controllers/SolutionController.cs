@@ -17,11 +17,13 @@ namespace ApiTest.Controllers
         [HttpPost (Name = "GetSolution")]
         public SolutionData Post([FromBody] string equation)
         {
-            return new SolutionData
-            {
-                Date = DateTime.Now,
-                solutionString = MathAdvisorLogic.Solver.Solve(equation)
-            };
+                return new SolutionData
+                {
+                    Date = DateTime.Now,
+                    solutionString = MathAdvisorLogic.Solver.Solve(equation),
+                    answers = MathAdvisorLogic.Solver.answers,
+                    success = true
+                };
         }
     }
 }

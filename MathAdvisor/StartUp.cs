@@ -2,8 +2,9 @@
 using MathAdvisor.PreAlgebra;
 using MathAdvisor.Algebra;
 using MathNet.Symbolics;
+//using MathNet.Numerics;
 using System.Text.RegularExpressions;
-
+using MathNet.Symbolics;
 namespace MathAdvisor
 {
     /// <summary>
@@ -14,8 +15,8 @@ namespace MathAdvisor
     {
         static void Main(string[] args)
         {
-            string leftSide = "(5)/(3)x+4=5-6";
-            Console.WriteLine(SymbolicExpression.Parse("2^5"));
+            var equation = SymbolicExpression.Parse("x+3+4");
+            Console.WriteLine(equation.ToString()); 
         }
     }
 

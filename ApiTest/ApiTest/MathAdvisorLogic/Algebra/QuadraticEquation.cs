@@ -84,11 +84,11 @@ namespace MathAdvisor.Algebra
             a = AddParenthesesOnNegatives(a);
             b = AddParenthesesOnNegatives(b);
             c = AddParenthesesOnNegatives(c);
-            string discriminant = SymbolicExpression.Parse($"{b}^2 - 4*{a}*{c}").ToString();
+            string discriminant = SymbolicExpression.Parse($"{b}^2 - 4*{a}*{c}").ToLaTeX();
             Solver.solution += $"Solve the Discriminant using the formula b^2 - 4ac: {b}^2 - 4*{a}*{c} = {discriminant}\n";
             if (int.Parse(discriminant) < 0)
             {
-                Solver.solution += $"{discriminant} is smaller than 0 therefore the equation doesn't have an answer";
+                Solver.solution += $"{discriminant} is less than 0 therefore the equation doesn't have an answer";
                 return;
             }
             var dInfix = Infix.ParseOrThrow($"sqrt({discriminant})");
@@ -101,10 +101,14 @@ namespace MathAdvisor.Algebra
             {
                 discriminant = $"sqrt({discriminant})";
             }
+
             string firstAnswer = SymbolicExpression.Parse($"(-{b} + {discriminant})/(2*{a})\n").ToString();
             string secondAnswer = SymbolicExpression.Parse($"(-{b} - {discriminant})/(2*{a})\n").ToString();
-            Solver.solution += $"Solve for x1 by using the formula (-b + sqrt(D))/(2*a) = ({SymbolicExpression.Parse($"-{b}")} + {discriminant})/(2*{a}) = {firstAnswer}\n";
-            Solver.solution += $"Solve for x2 by using the formula (-b - sqrt(D))/(2*a) = ({SymbolicExpression.Parse($"-{b}")} - {discriminant})/(2*{a}) = {secondAnswer}\n";
+            Solver.solution += $"Solve for x1:({SymbolicExpression.Parse($"-{b}")} + {discriminant})/(2*{a})\n";
+            Solver.solution += $"Solve for x2:({SymbolicExpression.Parse($"-{b}")} - {discriminant})/(2*{a})\n";
+            Solver.answers.Add(Evaluate.Evaluate(null, Infix.ParseOrThrow(firstAnswer)).RealValue.ToString());
+            Solver.answers.Add(Evaluate.Evaluate(null, Infix.ParseOrThrow(secondAnswer)).RealValue.ToString());
+
         }
         private static string AddParenthesesOnNegatives(string number)
         {

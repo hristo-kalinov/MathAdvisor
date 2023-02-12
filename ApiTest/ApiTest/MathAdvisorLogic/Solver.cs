@@ -12,10 +12,11 @@ namespace ApiTest.MathAdvisorLogic
     public class Solver
     {
         public static string solution = string.Empty; //append part of the solution to this string
-
+        public static List<string> answers = new List<string>();
         public static string Solve(string inputExpression)
         {
             solution = string.Empty;
+            answers.Clear();
             if (inputExpression.Contains('='))
             {
                 solution += $"{inputExpression}\n";
