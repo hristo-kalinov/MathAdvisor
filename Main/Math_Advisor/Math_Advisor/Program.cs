@@ -8,8 +8,6 @@ namespace Math_Advisor
 
 			builder.Services.AddControllersWithViews();
 			builder.Services.AddRouting(options => options.LowercaseUrls = true);
-			builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",
-				builder => builder.WithOrigins("https://localhost:8080")));
 
 			var app = builder.Build();
 
@@ -23,8 +21,8 @@ namespace Math_Advisor
 			app.UseStaticFiles();
 
 			app.UseRouting();
-
 			app.UseAuthorization();
+
 
 			app.MapControllerRoute(
 				name: "default",

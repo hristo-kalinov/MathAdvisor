@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Math_Advisor.API.Services.MathAdvisorLogic.Algebra;
 using Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra;
 using Math_Advisor.API.Services.MathAdvisorLogic;
+using System.Net;
 
 namespace Math_Advisor.API.Controllers
 {
@@ -10,9 +11,16 @@ namespace Math_Advisor.API.Controllers
 	[Route("[controller]")]
 	public class GetSolutionController : ControllerBase
 	{
-		[HttpPost(Name = "GetSolution")]
+		[HttpOptions(Name = "GetSolution")]
+		public HttpResponseMessage Options()
+		{
+			return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+		}
+        [HttpPost]
 		public SolutionModel Post([FromBody] string equation)
 		{
+
+			//HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
 			return new SolutionModel
 			{
 				Date = DateTime.Now,

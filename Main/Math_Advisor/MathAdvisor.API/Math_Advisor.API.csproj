@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Fractions" Version="7.2.1" />
     <PackageReference Include="MathNet.Symbolics" Version="0.24.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

@@ -140,7 +140,7 @@ function sendData() {
     fetch('https://localhost:8080/GetSolution', {
         method: 'POST',
         headers: {
-            'Content-Type': 'text/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(publicMathString)
     })
