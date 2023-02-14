@@ -9,12 +9,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
 {
     public static class StringHandling
     {
-        /// <summary>
-        /// Add plus or minus in front of the first number so the sign becomes known for the <currentSideSigns> array
-        /// </summary>
-        /// <param name="side">Current side we are working with</param>
-        /// <returns>Expression with an added sign in the beginning</returns>
-        /// 
+        // Add plus or minus in front of the first number so the sign becomes known for the <currentSideSigns> array
 
         internal static string AddSignInBeginning(string side)
         {
@@ -25,11 +20,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
             return side;
         }
 
-        /// <summary>
-        /// Add all signs from the current side to the <currentSideSigns> array
-        /// </summary>
-        /// <param name="side">Current side we are working with</param>
-        /// <returns>Array that contains all signs of an expression</returns>
+        // Add all signs from the current side to the <currentSideSigns> array
         internal static List<char> AddSignsInArray(string side)
         {
             List<char> array = new();
@@ -43,13 +34,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
             return array;
         }
 
-        /// <summary>
-        /// Method for removal of unnecessary numbers and signs
-        /// </summary>
-        /// <param name="currentSideNumbers">Current numbers of the side we are working with</param>
-        /// <param name="currentSideNumbersToBeRemoved">Current numbers to be removed from the side we are workig with</param>
-        /// <returns>Expression without unnecessary numbers and signs</returns>
-
+        // Method for removal of unnecessary numbers and signs
         internal static List<string> RemoveRemainingNumbersAndSigns(List<string> currentSideNumbers, List<string> currentSideNumbersToBeRemoved)
         {
             for (int i = 0; i < currentSideNumbersToBeRemoved.Count; i++)
@@ -81,8 +66,8 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
             return formattedExpression;
         }
 
-
-        public static string ReverseEquation(string input)//3 + x + x^2 becomes x^2 + x + 3
+        //3 + x + x^2 becomes x^2 + x + 3
+        public static string ReverseEquation(string input)
         {
             input = HandlePlusesAndMinuses(input);
             input = string.Join(" ", input.ToString().Split(' ').Reverse());

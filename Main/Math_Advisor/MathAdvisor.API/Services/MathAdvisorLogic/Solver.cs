@@ -10,7 +10,8 @@
 	using System.Threading.Tasks;
 	public class Solver
 	{
-		public static string solution = string.Empty; //append part of the solution to this string
+		//append part of the solution to this string
+		public static string solution = string.Empty; 
 		public static List<string> answers = new List<string>();
 		public static string Solve(string inputExpression)
 		{
@@ -18,6 +19,7 @@
 			answers.Clear();
 			if (inputExpression.Contains('='))
 			{
+
 				solution += $"{inputExpression}\n";
 				string formattedExpression = StringHandling.SymbolHandling(inputExpression);
 
@@ -54,19 +56,35 @@
 				prevRight = rightSide;
 
 				string simplified = string.Concat(leftSide, " = ", rightSide);
-				if (!leftSide.Contains('^'))
+				if (inputExpression.Contains('x'))
 				{
-					LinearEquation.SolveLinear(leftSide, rightSide);
+					if (!leftSide.Contains('^'))
+					{
+						LinearEquation.SolveLinear(leftSide, rightSide);
+					}
+					else
+					{
+						QuadraticEquation.SolveQuadratic(leftSide, rightSide);
+					}
 				}
 				else
-				{
-					QuadraticEquation.SolveQuadratic(leftSide, rightSide);
-				}
+                {
+					Solver.solution += "Check if both sides are equal:";
+					if(leftSide == rightSide)
+                    {
+						Solver.solution += "true";
+                    }
+					else
+                    {
+                        Solver.solution += "false";
+                    }
+                }
 			}
 
 			else
 			{
-				solution = SymbolicExpression.Parse(inputExpression).ToString();
+				solution += inputExpression + "\n";
+				solution += $"Simplify: {SymbolicExpression.Parse(inputExpression)}\n";
 			}
 			return solution;
 

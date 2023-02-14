@@ -21,8 +21,6 @@ namespace Math_Advisor
 			app.UseStaticFiles();
 
 			app.UseRouting();
-			app.UseAuthorization();
-
 
 			app.MapControllerRoute(
 				name: "default",

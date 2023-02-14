@@ -4,16 +4,10 @@ using System.Text.RegularExpressions;
 
 namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
 {
-	/// <summary>
-	/// Class for soling linear equations
-	/// </summary>
+	// Class for soling linear equations
 	public static class LinearEquation
 	{
-		/// <summary>
-		/// Main method for solving the equation
-		/// </summary>
-		/// <param name="inputExpression">Initial input expression</param>
-		/// <returns>Solved equation for x</returns>
+		// Main method for solving the equation
 		public static void SolveLinear(string leftOutput, string rightOutput) //Solve problem from input
 		{
 			decimal result = 0m;
@@ -39,11 +33,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
 			Solver.answers.Add(result.ToString().Replace(",", "."));
 		}
 
-		/// <summary>
-		/// Calculate coefficient of x and the right side to find the true value of x
-		/// </summary>
-		/// <param name="side">Current side we are working with</param>
-		/// <returns>Coefficient</returns>
+		// Calculate coefficient of x and the right side to find the true value of x
 		private static object[] CalculateCoefficient(string side)
 		{
 			bool divisionNeeded = false;

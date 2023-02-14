@@ -21,13 +21,25 @@ namespace Math_Advisor.API.Controllers
 		{
 
 			equation = equation.Replace(",", ".");
-			return new SolutionModel
+			try
 			{
-				Date = DateTime.Now,
-				SolutionString = Solver.Solve(equation),
-				Answers = Solver.answers,
-				Success = true
-			};
+				return new SolutionModel
+				{
+					Date = DateTime.Now,
+					SolutionString = Solver.Solve(equation),
+					Answers = Solver.answers,
+					Success = true
+				};
+			}
+			catch(Exception e)
+            {
+				Console.WriteLine(e);
+				return new SolutionModel
+				{
+					Date = DateTime.Now,
+					Success = false
+				};
+			}
 		}
 	}
 }

@@ -5,16 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
 {
-    /// <summary>
-    /// Class for implementing common math tasks
-    /// </summary>
+
+    // Class for implementing common math tasks
     public static class CommonMath
     {
-        /// <summary>
-        /// Calculate Mean of any numbers
-        /// </summary>
-        /// <param name="numbers"></param>
-        /// <returns>Average value of input numbers</returns>
+        // Calculate Mean of any numbers
         public static Fraction CalculateMean(params Fraction[] numbers)
         {
             int sum = 0;
@@ -26,11 +21,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
             return avg;
         }
 
-        /// <summary>
-        /// Calculate greatest common divisor for any numbers
-        /// </summary>
-        /// <param name="numbers"></param>
-        /// <returns>Greatest common divisor</returns>
+        // Calculate greatest common divisor for any numbers
         public static int CalculateGreatestCommonDivisor(int[] numbers)
         {
             int result = numbers[0];
@@ -47,23 +38,13 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
             return result;
         }
 
-        /// <summary>
-        /// Calculate least common multiple for any numbers
-        /// </summary>
-        /// <param name="numbers"></param>
-        /// <returns>Least common multiple</returns>
-        /// <exception cref="NotImplementedException"></exception>
+        // Calculate least common multiple for any numbers
         public static int CalculateLeastCommonMultiple(int[] numbers)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Calculate prime factors for any number
-        /// </summary>
-        /// <param name="number"></param>
-        /// <returns>Prime factors</returns>
-        /// <exception cref="NotImplementedException"></exception>
+        // Calculate prime factors for any number
         public static int[] CalculatePrimeFactors(int number)
         {
             throw new NotImplementedException();
@@ -76,12 +57,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
             return gcd(b % a, a);
         }
 
-        /// <summary>
-        /// Method to check if either side of the equation has any parentheses to be expaned before solving
-        /// </summary>
-        /// <param name="side">Current side we are working with</param>
-        /// <returns>Expaned expression without parentheses</returns>
-
+        // Method to check if either side of the equation has any parentheses to be expaned before solving
         public static string CheckForParentheses(string side)
         {
             if (side.Contains('(') && side.Contains(')'))
@@ -110,12 +86,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
             }
             return factors;
         }
-        /// <summary>
-        /// Method for normalizing equations if need be
-        /// </summary>
-        /// <param name="leftSide">Left side of the expression</param>
-        /// <param name="rightSide">Right side of the expression</param>
-        /// <returns>Normalized equation</returns>
+        // Method for normalizing equations if need be
         public static string[] NormalizeEquation(string leftSide, string rightSide, bool isQuadratic)
         {
             leftSide = StringHandling.AddSignInBeginning(leftSide);
@@ -128,8 +99,8 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
             List<string> rightSideNumbersToBeRemoved = new();
             int initialLeftSideNumbersCount = leftSideNumbers.Count;
             int initialRightSideNumbersCount = rightSideNumbers.Count;
-
-            if (isQuadratic) //if the equation is quadratic add everything to the left: x^2 + 5*x + 4 = 0
+            //if the equation is quadratic add everything to the left: x^2 + 5*x + 4 = 0
+            if (isQuadratic) 
             {
                 for (int num = 0; num < initialLeftSideNumbersCount; num++)
                 {

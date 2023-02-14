@@ -4,17 +4,10 @@ using MathNet.Symbolics;
 
 namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
 {
-    /// <summary>
-    /// Class for solving quadratic equations
-    /// </summary>
+    // Class for solving quadratic equations
     public class QuadraticEquation
     {
-        /// <summary>
-        /// Main method for solving the equation
-        /// </summary>
-        /// <param name="inputEquation">Initial input equation</param>
-        /// <returns>Solved equation for x</returns>
-        /// <exception cref="NotImplementedException"></exception>
+        // Main method for solving the equation
         public static void SolveQuadratic(string leftSide, string rightSide)
         {
             string[] equationArray = CommonMath.NormalizeEquation(leftSide, rightSide, true);
@@ -58,7 +51,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
                 {
                     if (parameters[1][1] != 'x')
                     {
-                        b = parameters[1].Split('x')[1];
+                        b = parameters[1].Split('*')[0];
                     }
                     else
                     {
@@ -85,10 +78,11 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
             b = AddParenthesesOnNegatives(b);
             c = AddParenthesesOnNegatives(c);
             string discriminant = SymbolicExpression.Parse($"{b}^2 - 4*{a}*{c}").ToLaTeX();
+            
             Solver.solution += $"Solve the Discriminant using the formula b^2 - 4ac: {b}^2 - 4*{a}*{c} = {discriminant}\n";
             if (int.Parse(discriminant) < 0)
             {
-                Solver.solution += $"{discriminant} is less than 0 therefore the equation doesn't have an answer";
+                Solver.solution += $"{discriminant} is less than 0 therefore the equation doesn't have an answer: ";
                 return;
             }
             var dInfix = Infix.ParseOrThrow($"sqrt({discriminant})");
@@ -112,7 +106,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
         }
         private static string AddParenthesesOnNegatives(string number)
         {
-            if (number[0] == '-')
+            if (number.StartsWith("-"))
                 return $"({number})";
             else
                 return number;

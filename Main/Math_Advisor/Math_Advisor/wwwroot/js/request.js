@@ -41,7 +41,6 @@ function AddElements(input) {
         // Extract the text and equation
         var text = parts[0].trim();
         var equation = parts[1].trim();
-        equation = equation.replace(/\s+/g, '')
         // Create a new step
         var step = document.createElement("div");
 
@@ -58,20 +57,24 @@ function AddElements(input) {
         step.appendChild(stepText);
 
         // Create a div to hold the equation
-        var stepEquationWrapper = document.createElement("div");
-        stepEquationWrapper.style.fontSize = "22px";
+        equation = equation.replace(/\s+/g, '')
+        if (equation != "") {
+            var stepEquationWrapper = document.createElement("div");
+            stepEquationWrapper.style.fontSize = "22px";
 
-        // Add the equation as a MathQuill static object
+            // Add the equation as a MathQuill static object
 
-        var latex = StringToLaTeX(equation)
-        var stepEquation = document.createElement("div");
-        stepEquation.setAttribute("class", "mathquill-static-text");
-        var equation = MQ.StaticMath(stepEquation);
-        equation.latex(latex);
+            var latex = StringToLaTeX(equation)
+            var stepEquation = document.createElement("div");
+            stepEquation.setAttribute("class", "mathquill-static-text");
+            var equation = MQ.StaticMath(stepEquation);
+            equation.latex(latex);
 
-        // Add the stepEquationWrapper to the step
-        stepEquationWrapper.appendChild(stepEquation);
-        step.appendChild(stepEquationWrapper);
+            // Add the stepEquationWrapper to the step
+            stepEquationWrapper.appendChild(stepEquation);
+            step.appendChild(stepEquationWrapper);
+        }
+       
 
         // Add the step to the explanation div
         explanation.appendChild(step);
@@ -168,8 +171,9 @@ function sendData() {
                 return;
             }
             AddElements(jsonObj.solutionString);
-
-            AddAnswers(jsonObj.answers)
+            if (jsonObj.answers.length > 0) {
+                AddAnswers(jsonObj.answers)
+            }
 
         });
 }
