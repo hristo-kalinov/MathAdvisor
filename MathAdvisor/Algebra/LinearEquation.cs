@@ -52,6 +52,7 @@ namespace MathAdvisor.Algebra
 			if (side.Length == 1 && side.StartsWith('x'))
 			{
 				coefficient = 1m;
+				divisionNeeded = true;
 			}
 			else if (side.Length == 2 && side.StartsWith('-') && side.Contains('x'))
 			{

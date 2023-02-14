@@ -14,9 +14,7 @@ namespace MathAdvisor
 	{
 		static void Main(string[] args)
 		{
-
-			Console.WriteLine(Solver.Solve("x*4 + 3 = 0"));
-
+			Console.WriteLine(Solver.Solve("x + 3 = 0"));
 		}
 	}
 }

@@ -4,11 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
 {
-    /// <summary>
-    /// Class for soling linear equations
-    /// </summary>
-    public static class LinearEquation
-    {
+	/// <summary>
+	/// Class for soling linear equations
+	/// </summary>
+	public static class LinearEquation
+	{
 		/// <summary>
 		/// Main method for solving the equation
 		/// </summary>
@@ -36,7 +36,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
 			{
 				result = rightCoefficient * leftCoefficient;
 			}
-			Solver.solution += $"x = {result}\n";
+			Solver.answers.Add(result.ToString());
 		}
 
 		/// <summary>
@@ -53,6 +53,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
 			if (side.Length == 1 && side.StartsWith('x'))
 			{
 				coefficient = 1m;
+				divisionNeeded = true;
 			}
 			else if (side.Length == 2 && side.StartsWith('-') && side.Contains('x'))
 			{
