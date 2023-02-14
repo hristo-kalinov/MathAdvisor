@@ -5,13 +5,10 @@
 	using MathNet.Symbolics;
 	using System;
 	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	public class Solver
+	public static class Solver
 	{
 		//append part of the solution to this string
-		public static string solution = string.Empty; 
+		public static string solution = string.Empty;
 		public static List<string> answers = new List<string>();
 		public static string Solve(string inputExpression)
 		{
@@ -68,17 +65,17 @@
 					}
 				}
 				else
-                {
-					Solver.solution += "Check if both sides are equal:";
-					if(leftSide == rightSide)
-                    {
-						Solver.solution += "true";
-                    }
+				{
+					solution += "Check if both sides are equal:";
+					if (leftSide == rightSide)
+					{
+						solution += "true";
+					}
 					else
-                    {
-                        Solver.solution += "false";
-                    }
-                }
+					{
+						solution += "false";
+					}
+				}
 			}
 
 			else

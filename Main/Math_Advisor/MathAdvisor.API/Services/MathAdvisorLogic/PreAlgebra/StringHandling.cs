@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
+﻿namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
 {
-    public static class StringHandling
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Text.RegularExpressions;
+	public static class StringHandling
     {
         // Add plus or minus in front of the first number so the sign becomes known for the <currentSideSigns> array
 

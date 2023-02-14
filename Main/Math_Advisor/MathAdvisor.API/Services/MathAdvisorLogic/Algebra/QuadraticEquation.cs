@@ -1,11 +1,9 @@
-﻿using Math_Advisor.API.Services.MathAdvisorLogic;
-using Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra;
-using MathNet.Symbolics;
-
-namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
+﻿namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
 {
-    // Class for solving quadratic equations
-    public class QuadraticEquation
+	using Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra;
+	using MathNet.Symbolics;
+	// Class for solving quadratic equations
+	public class QuadraticEquation
     {
         // Main method for solving the equation
         public static void SolveQuadratic(string leftSide, string rightSide)

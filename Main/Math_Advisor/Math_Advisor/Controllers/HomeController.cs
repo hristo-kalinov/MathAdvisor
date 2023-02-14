@@ -1,10 +1,9 @@
-﻿using Math_Advisor.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
-namespace Math_Advisor.Controllers
+﻿namespace Math_Advisor.Controllers
 {
-    public class HomeController : Controller
+	using Math_Advisor.Models;
+	using Microsoft.AspNetCore.Mvc;
+	using System.Diagnostics;
+	public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 

@@ -1,13 +1,9 @@
-﻿using Fractions;
-using MathNet.Symbolics;
-using System.Text;
-using System.Text.RegularExpressions;
-
-namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
+﻿namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
 {
-
-    // Class for implementing common math tasks
-    public static class CommonMath
+	using Fractions;
+	using MathNet.Symbolics;
+	// Class for implementing common math tasks
+	public static class CommonMath
     {
         // Calculate Mean of any numbers
         public static Fraction CalculateMean(params Fraction[] numbers)
@@ -217,7 +213,5 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra
             //Returning the final equation for the solution
             return new string[] { string.Join(" ", leftSideNumbers), string.Join(" ", rightSideNumbers) };
         }
-
-        
     }
 }

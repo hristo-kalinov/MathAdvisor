@@ -1,12 +1,9 @@
-using Math_Advisor.API.Models;
-using Microsoft.AspNetCore.Mvc;
-using Math_Advisor.API.Services.MathAdvisorLogic.Algebra;
-using Math_Advisor.API.Services.MathAdvisorLogic.PreAlgebra;
-using Math_Advisor.API.Services.MathAdvisorLogic;
-using System.Net;
-
 namespace Math_Advisor.API.Controllers
 {
+	using Math_Advisor.API.Models;
+	using Microsoft.AspNetCore.Mvc;
+	using Math_Advisor.API.Services.MathAdvisorLogic;
+	using System.Net;
 	[ApiController]
 	[Route("[controller]")]
 	public class GetSolutionController : ControllerBase

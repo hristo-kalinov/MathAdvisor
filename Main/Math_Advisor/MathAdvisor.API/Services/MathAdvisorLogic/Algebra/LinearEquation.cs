@@ -1,8 +1,4 @@
-﻿using Math_Advisor.API.Services.MathAdvisorLogic;
-using MathNet.Symbolics;
-using System.Text.RegularExpressions;
-
-namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
+﻿namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
 {
 	// Class for soling linear equations
 	public static class LinearEquation
