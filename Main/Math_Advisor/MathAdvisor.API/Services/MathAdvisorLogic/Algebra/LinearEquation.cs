@@ -36,7 +36,7 @@ namespace Math_Advisor.API.Services.MathAdvisorLogic.Algebra
 			{
 				result = rightCoefficient * leftCoefficient;
 			}
-			Solver.answers.Add(result.ToString());
+			Solver.answers.Add(result.ToString().Replace(",", "."));
 		}
 
 		/// <summary>

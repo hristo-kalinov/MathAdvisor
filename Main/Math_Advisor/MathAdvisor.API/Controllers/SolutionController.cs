@@ -20,7 +20,7 @@ namespace Math_Advisor.API.Controllers
 		public SolutionModel Post([FromBody] string equation)
 		{
 
-			//HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+			equation = equation.Replace(",", ".");
 			return new SolutionModel
 			{
 				Date = DateTime.Now,
