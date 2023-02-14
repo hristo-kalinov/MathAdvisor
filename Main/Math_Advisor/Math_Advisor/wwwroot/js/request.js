@@ -1,4 +1,9 @@
-﻿function AddElements(input) {
+﻿const pattern = /\\left\(([^()+-]+)\\right\)|([^()+-])/g;
+
+function removeParens(expr) {
+    return expr.replace(pattern, "$1$2");
+}
+function AddElements(input) {
     // Get the explanation div
     var explanation = document.getElementById("explanation");
     while (explanation.firstChild) {
@@ -81,13 +86,13 @@ function StringToLaTeX(equation) {
     if (sides.length > 1) {
         var lhs = math.parse(sides[0]);
         var rhs = math.parse(sides[1]);
-        var lhsTex = lhs.toTex().replace(/\\left\(/g, '').replace(/\\right\)/g, '');
-        var rhsTex = rhs.toTex().replace(/\\left\(/g, '').replace(/\\right\)/g, '');
+        var lhsTex = removeParens(lhs.toTex())
+        var rhsTex = removeParens(rhs.toTex());
         var latex = lhsTex + "=" + rhsTex;
     }
     else {
         var lhs = math.parse(sides[0]);
-        var latex = lhs.toTex().replace(/\\left\(/g, '').replace(/\\right\)/g, '');
+        var latex = removeParens(lhs.toTex());
     }
     return latex
 }
@@ -126,6 +131,8 @@ function AddAnswers(answers) {
             explanation.appendChild(wrapper);
         }
     }
+    var newLine = document.createElement("br");
+    explanation.appendChild(newLine);
 }
 document.getElementById("math-field").addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
